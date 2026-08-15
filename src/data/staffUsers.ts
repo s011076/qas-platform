@@ -1,0 +1,88 @@
+import { StaffUser } from '../types';
+
+export const STAFF_USERS: StaffUser[] = [
+  {
+    id: 'staff-01',
+    name: '林總監',
+    role: 'super_admin',
+    roleTitle: '系統總監 / 總管理員',
+    department: '運營決策部',
+    email: 'director.lin@hk-qas.com',
+    avatarLetter: '林',
+    color: 'bg-purple-600 text-white border-purple-400',
+    permissions: {
+      canViewFinancials: true,
+      canChangeCandidateStatus: true,
+      canAssignBatch: true,
+      canManageBatches: true,
+      canExportData: true,
+      canAddNotes: true,
+      canViewAllCandidates: true,
+      isSensitiveInfoMasked: false,
+      canResetSystem: true,
+    },
+  },
+  {
+    id: 'staff-02',
+    name: '張主管',
+    role: 'academic_lead',
+    roleTitle: '資深教務主管 / 資格審核官',
+    department: '教務審核組',
+    email: 'academic.zhang@hk-qas.com',
+    avatarLetter: '張',
+    color: 'bg-blue-600 text-white border-blue-400',
+    permissions: {
+      canViewFinancials: false,
+      canChangeCandidateStatus: true,
+      canAssignBatch: true,
+      canManageBatches: true,
+      canExportData: true,
+      canAddNotes: true,
+      canViewAllCandidates: true,
+      isSensitiveInfoMasked: false,
+      canResetSystem: false,
+    },
+  },
+  {
+    id: 'staff-03',
+    name: '李顧問',
+    role: 'admissions',
+    roleTitle: '招生顧問 / 客服專員',
+    department: '招生諮詢部',
+    email: 'admissions.li@hk-qas.com',
+    avatarLetter: '李',
+    color: 'bg-amber-600 text-white border-amber-400',
+    permissions: {
+      canViewFinancials: false,
+      canChangeCandidateStatus: false, // only mark contacted
+      canAssignBatch: false,
+      canManageBatches: false,
+      canExportData: false,
+      canAddNotes: true,
+      canViewAllCandidates: true,
+      isSensitiveInfoMasked: false,
+      canResetSystem: false,
+    },
+  },
+  {
+    id: 'staff-04',
+    name: '陳Sir (導師)',
+    role: 'instructor',
+    roleTitle: '註冊 QAS 首席導師 / 考證教練',
+    department: '實訓教學部',
+    email: 'trainer.chan@hk-qas.com',
+    avatarLetter: '陳',
+    color: 'bg-emerald-600 text-white border-emerald-400',
+    permissions: {
+      canViewFinancials: false,
+      canChangeCandidateStatus: false, // only mark completed
+      canAssignBatch: false,
+      canManageBatches: false,
+      canExportData: false,
+      canAddNotes: true,
+      canViewAllCandidates: false, // only enrolled/completed students
+      isSensitiveInfoMasked: true, // phone number masked: 138****1234
+      canResetSystem: false,
+    },
+  },
+];

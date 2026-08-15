@@ -1,0 +1,6 @@
+{
+  "name": "QAS 預前培訓班機構管理平台",
+  "description": "面向大灣區赴港保安物管人才的 QAS 培訓招生、學員進度查詢與教務管理系統",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --app-font-scale: 1;
+    font-size: 16px;
+  }
+
+  html {
+    font-size: 16px;
+  }
+
+  body {
+    background-color: #0A1128;
+    color: #e2e8f0;
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft JhengHei', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    font-size: 16px;
+    line-height: 1.65;
+    letter-spacing: 0.01em;
+  }
+
+  /* Font Scaling Modes — Standard = readable default (content scales, chrome stays compact) */
+  .font-scale-standard {
+    font-size: 16px;
+  }
+  .font-scale-standard h1 { font-size: 1.35em !important; line-height: 1.35 !important; }
+  .font-scale-standard h2 { font-size: 1.25em !important; line-height: 1.35 !important; }
+  .font-scale-standard h3 { font-size: 1.18em !important; }
+  .font-scale-standard h4 { font-size: 1.12em !important; }
+  .font-scale-standard .text-\[10px\] { font-size: 13.5px !important; }
+  .font-scale-standard .text-\[11px\] { font-size: 14.5px !important; }
+  .font-scale-standard .text-xs { font-size: 15px !important; }
+  .font-scale-standard .text-sm { font-size: 16.5px !important; }
+  .font-scale-standard .text-base { font-size: 18.5px !important; }
+
+  .font-scale-large {
+    font-size: 19px;
+  }
+  .font-scale-large h1 { font-size: 1.5em !important; line-height: 1.3 !important; }
+  .font-scale-large h2 { font-size: 1.38em !important; line-height: 1.3 !important; }
+  .font-scale-large h3 { font-size: 1.28em !important; }
+  .font-scale-large h4 { font-size: 1.2em !important; }
+  .font-scale-large .text-\[10px\] { font-size: 15px !important; }
+  .font-scale-large .text-\[11px\] { font-size: 16px !important; }
+  .font-scale-large .text-xs { font-size: 16.5px !important; }
+  .font-scale-large .text-sm { font-size: 18px !important; }
+  .font-scale-large .text-base { font-size: 20px !important; }
+
+  .font-scale-xlarge {
+    font-size: 21px;
+  }
+  .font-scale-xlarge h1 { font-size: 1.6em !important; line-height: 1.3 !important; }
+  .font-scale-xlarge h2 { font-size: 1.5em !important; line-height: 1.3 !important; }
+  .font-scale-xlarge h3 { font-size: 1.4em !important; }
+  .font-scale-xlarge h4 { font-size: 1.3em !important; }
+  .font-scale-xlarge .text-\[10px\] { font-size: 16.5px !important; }
+  .font-scale-xlarge .text-\[11px\] { font-size: 17.5px !important; }
+  .font-scale-xlarge .text-xs { font-size: 18px !important; }
+  .font-scale-xlarge .text-sm { font-size: 19.5px !important; }
+  .font-scale-xlarge .text-base { font-size: 21.5px !important; }
+
+  /* Keep interactive controls compact so layouts don't break */
+  .font-scale-standard button, .font-scale-large button, .font-scale-xlarge button,
+  .font-scale-standard select, .font-scale-large select, .font-scale-xlarge select,
+  .font-scale-standard input, .font-scale-large input, .font-scale-xlarge input,
+  .font-scale-standard textarea, .font-scale-large textarea, .font-scale-xlarge textarea {
+    font-size: 14px !important;
+  }
+
+  /* Custom high density scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #080d1e;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #334155;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+
+
