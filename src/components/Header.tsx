@@ -142,8 +142,8 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </div>
 
-          {/* Desktop & Tablet Navigation Items */}
-          <nav className="flex items-center gap-1 sm:gap-2 overflow-x-auto py-1 no-scrollbar shrink-0">
+          {/* Desktop & Tablet Navigation Items (hidden on mobile — bottom nav handles phones) */}
+          <nav className="hidden sm:flex items-center gap-1 sm:gap-2 overflow-x-auto py-1 no-scrollbar shrink-0">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = currentTab === item.id;
