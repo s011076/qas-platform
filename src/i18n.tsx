@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
 import * as OpenCC from 'opencc-js';
 
 export type Lang = 'zh-Hant' | 'zh-Hans';
@@ -74,12 +74,24 @@ export const LangProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 };
 
-/** Hook: re-apply conversion after React re-renders (default text is Traditional). */
+/** Hook: re-apply conversion after lang changes (both directions) and after React re-renders. */
 export function useDomLangSync(ref: React.RefObject<HTMLElement | null>, deps: unknown[]) {
   const { lang } = useLang();
+  const prevLang = useRef(lang);
+
   useEffect(() => {
-    if (lang === 'zh-Hant') return; // default source text is already Traditional
-    convertDomText(ref.current, lang);
+    const langChanged = prevLang.current !== lang;
+    if (langChanged) {
+      // Direction change: convert DOM both ways (t2s when switching to simplified,
+      // s2t when switching back to traditional). s2t is best-effort for
+      // already-converted text; source of truth is the React-rendered traditional.
+      convertDomText(ref.current, lang);
+      prevLang.current = lang;
+    } else if (lang === 'zh-Hans') {
+      // React re-rendered (tab/data change) and restored traditional source text —
+      // re-apply simplified conversion.
+      convertDomText(ref.current, lang);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lang, ...deps]);
 }
