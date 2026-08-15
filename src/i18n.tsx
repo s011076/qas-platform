@@ -31,10 +31,14 @@ const LangContext = createContext<LangContextValue>({
 
 export const useLang = () => useContext(LangContext);
 
+/** Original-text snapshot cache: the React source is always Traditional, so we
+ *  snapshot each text node the first time we see it and restore from the
+ *  snapshot when switching back to Traditional — exact, no lossy s2t. */
+const originalCache = new WeakMap<Text, string>();
+
 /** Convert all visible text nodes under root (skips input values & placeholders). */
 export function convertDomText(root: HTMLElement | null, lang: Lang) {
   if (!root) return;
-  const converter = lang === 'zh-Hans' ? t2s : s2t;
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
   const nodes: Text[] = [];
   while (walker.nextNode()) {
@@ -48,9 +52,27 @@ export function convertDomText(root: HTMLElement | null, lang: Lang) {
     if (parent.isContentEditable) return;
     const raw = node.nodeValue || '';
     if (!raw.trim()) return;
-    const converted = converter(raw);
-    if (converted !== raw) {
-      node.nodeValue = converted;
+
+    if (lang === 'zh-Hant') {
+      // Restore exact original text from snapshot.
+      const orig = originalCache.get(node);
+      if (orig !== undefined && node.nodeValue !== orig) {
+        node.nodeValue = orig;
+      } else if (orig === undefined) {
+        // Fresh node after React re-render — its current value IS the original.
+        originalCache.set(node, raw);
+      }
+    } else {
+      // Simplified: always convert from the snapshot original (idempotent & exact).
+      let orig = originalCache.get(node);
+      if (orig === undefined) {
+        orig = raw;
+        originalCache.set(node, raw);
+      }
+      const converted = t2s(orig);
+      if (converted !== node.nodeValue) {
+        node.nodeValue = converted;
+      }
     }
   });
 }
