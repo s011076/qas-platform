@@ -14,12 +14,13 @@ import {
   Moon
 } from 'lucide-react';
 import { useLang } from '../i18n';
+import { AppTab } from '../types';
 
 export type FontScale = 'standard' | 'large' | 'xlarge';
 
 interface HeaderProps {
-  currentTab: 'home' | 'register' | 'student' | 'admin';
-  onSelectTab: (tab: 'home' | 'register' | 'student' | 'admin') => void;
+  currentTab: AppTab;
+  onSelectTab: (tab: AppTab) => void;
   onOpenWechat: () => void;
   pendingCount?: number;
   fontScale?: FontScale;
@@ -44,13 +45,17 @@ export const Header: React.FC<HeaderProps> = ({
   const toggleLang = () => setLang(isSimplified ? 'zh-Hant' : 'zh-Hans');
 
   const navItems = [
-    { id: 'home' as const, label: '首頁介紹', icon: Building2, desc: '機構與課程介紹' },
+    { id: 'home' as const, label: '首頁', icon: Building2, desc: '機構與課程介紹' },
+    { id: 'courses' as const, label: '課程體系', icon: FileText, desc: '分享會 / QAS / 增值課包' },
+    { id: 'recruit' as const, label: '招募資訊', icon: Search, desc: '行業優勢與薪資試算' },
+    { id: 'schedule' as const, label: '開班日程', icon: Search, desc: '深圳 / 廣州場次' },
+    { id: 'faq' as const, label: '常見問題', icon: Search, desc: '資格 / 考證 / 薪資' },
     { id: 'register' as const, label: '立即報名', icon: FileText, desc: '赴港資格自評與報名' },
     { id: 'student' as const, label: '查進度', icon: Search, desc: '審核狀態與課前資料' },
     { id: 'admin' as const, label: '教務CRM', icon: UserCheck, desc: '教務CRM與場次管理', badge: pendingCount > 0 ? pendingCount : undefined },
   ];
 
-  const handleNavClick = (tab: 'home' | 'register' | 'student' | 'admin') => {
+  const handleNavClick = (tab: AppTab) => {
     onSelectTab(tab);
   };
 

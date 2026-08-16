@@ -91,6 +91,9 @@ export type StaffRole =
   | 'admissions'    // 招生顧問 / 客服專員 (View leads, Add follow-up notes, Mark as Contacted)
   | 'instructor';   // 培訓導師 / 考證教練 (View assigned enrolled students, mark attendance & completed)
 
+/** App-level navigation tabs (split pages). */
+export type AppTab = 'home' | 'courses' | 'recruit' | 'schedule' | 'faq' | 'register' | 'student' | 'admin';
+
 export interface StaffPermissions {
   canViewFinancials: boolean;
   canChangeCandidateStatus: boolean;

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Shield, BookOpen, MessageCircle, Phone, Award, CheckCircle2 } from 'lucide-react';
 
+import { AppTab } from '../types';
+
 interface FooterProps {
-  onSelectTab: (tab: 'home' | 'register' | 'student' | 'admin') => void;
+  onSelectTab: (tab: AppTab) => void;
   onOpenWechat: () => void;
 }
 

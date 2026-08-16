@@ -2,6 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Header, FontScale } from './components/Header';
 import { Footer } from './components/Footer';
 import { HomeView } from './components/HomeView';
+import { CoursesView } from './components/CoursesView';
+import { RecruitView } from './components/RecruitView';
+import { ScheduleView } from './components/ScheduleView';
+import { FaqView } from './components/FaqView';
 import { RegistrationView } from './components/RegistrationView';
 import { StudentPortalView } from './components/StudentPortalView';
 import { StaffAdminView } from './components/StaffAdminView';
@@ -10,9 +14,10 @@ import { Candidate, CourseBatch, CourseType } from './types';
 import { getStoredCandidates, getStoredBatches } from './services/storageService';
 import { LangProvider, useDomLangSync } from './i18n';
 import { Smartphone, Monitor, Building2, FileText, Search, UserCheck, MessageSquare } from 'lucide-react';
+import { AppTab } from './types';
 
 export default function App() {
-  const [currentTab, setCurrentTab] = useState<'home' | 'register' | 'student' | 'admin'>('home');
+  const [currentTab, setCurrentTab] = useState<AppTab>('home');
   const [isWechatModalOpen, setIsWechatModalOpen] = useState(false);
   const [registerCourseType, setRegisterCourseType] = useState<CourseType>('full_bundle');
   const [fontScale, setFontScale] = useState<FontScale>('standard');
@@ -65,7 +70,7 @@ export default function App() {
   }, []);
 
   // Handlers
-  const handleSelectTab = (tab: 'home' | 'register' | 'student' | 'admin') => {
+  const handleSelectTab = (tab: AppTab) => {
     setCurrentTab(tab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -140,7 +145,36 @@ export default function App() {
               onGoToRegister={handleGoToRegister}
               onGoToStudent={handleGoToStudent}
               onOpenWechat={() => setIsWechatModalOpen(true)}
+              onNavigate={handleSelectTab}
               batches={batches}
+            />
+          )}
+
+          {currentTab === 'courses' && (
+            <CoursesView
+              onGoToRegister={handleGoToRegister}
+              onOpenWechat={() => setIsWechatModalOpen(true)}
+              batches={batches}
+            />
+          )}
+
+          {currentTab === 'recruit' && (
+            <RecruitView
+              onGoToRegister={handleGoToRegister}
+              onOpenWechat={() => setIsWechatModalOpen(true)}
+            />
+          )}
+
+          {currentTab === 'schedule' && (
+            <ScheduleView
+              onGoToRegister={handleGoToRegister}
+              batches={batches}
+            />
+          )}
+
+          {currentTab === 'faq' && (
+            <FaqView
+              onOpenWechat={() => setIsWechatModalOpen(true)}
             />
           )}
 
@@ -189,6 +223,16 @@ export default function App() {
         </button>
 
         <button
+          onClick={() => handleSelectTab('courses')}
+          className={`flex flex-col items-center py-1 px-2 rounded-lg transition-colors ${
+            currentTab === 'courses' ? 'text-[#D4AF37] font-bold' : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <FileText className="w-4 h-4" />
+          <span className="text-[10px] mt-0.5">課程體系</span>
+        </button>
+
+        <button
           onClick={() => handleSelectTab('register')}
           className={`flex flex-col items-center py-1 px-2 rounded-lg transition-colors ${
             currentTab === 'register' ? 'text-[#D4AF37] font-bold' : 'text-slate-400 hover:text-slate-200'
@@ -219,14 +263,6 @@ export default function App() {
           {pendingCount > 0 && (
             <span className="absolute top-0 right-1 w-2 h-2 bg-rose-500 rounded-full animate-ping"></span>
           )}
-        </button>
-
-        <button
-          onClick={() => setIsWechatModalOpen(true)}
-          className="flex flex-col items-center py-1 px-2 rounded-lg text-[#D4AF37] hover:text-white transition-colors"
-        >
-          <MessageSquare className="w-4 h-4" />
-          <span className="text-[10px] mt-0.5">諮詢</span>
         </button>
       </nav>
 
