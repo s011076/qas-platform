@@ -168,23 +168,27 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider bg-[#D4AF37]/10 px-2 py-0.5 rounded border border-[#D4AF37]/20">
               赴港發展路徑圖
             </span>
-            <h2 className="text-xl sm:text-2xl font-bold text-white">從報名到赴港上崗 · 5 步全流程指引</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-white">從報名到赴港上崗 · 4 步全流程指引</h2>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-5">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
             {[
-              { n: '1', t: '線上自評報名', d: '填寫基本資料與語言自評' },
-              { n: '2', t: '參加 2 天分享會', d: '1 對 1 評估競爭力' },
-              { n: '3', t: '20h 預前培訓', d: '16h 法定 + 4h 專項' },
-              { n: '4', t: '簽注期語言增值', d: '英語 100 句強化' },
-              { n: '5', t: '赴港考證上崗', d: '直通香港物業公司' },
+              { n: '1', t: '線上自評報名', d: '填寫基本資料與語言自評', optional: false },
+              { n: '2', t: '2 天分享會（含 20h QAS 預訓）', d: '1 對 1 評估競爭力，隨課完成 20 小時 QAS 法定預前培訓', optional: false },
+              { n: '3', t: '簽注期語言增值', d: '4-6 個月等待期，英語口語 / 行業術語強化', optional: true },
+              { n: '4', t: '赴港考證上崗', d: '赴港快速取證，直通香港物業公司', optional: false },
             ].map((step) => (
               <div key={step.n} className="bg-slate-950/80 rounded-xl p-3.5 border border-slate-800 space-y-1.5">
-                <div className={`w-6 h-6 rounded flex items-center justify-center font-bold text-xs ${step.n === '5' ? 'bg-emerald-400 text-slate-950' : 'bg-[#D4AF37] text-slate-950'}`}>
-                  {step.n}
+                <div className="flex items-center justify-between gap-1">
+                  <div className={`w-6 h-6 rounded flex items-center justify-center font-bold text-xs ${step.n === '4' ? 'bg-emerald-400 text-slate-950' : 'bg-[#D4AF37] text-slate-950'}`}>
+                    {step.n}
+                  </div>
+                  {step.optional && (
+                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">選修</span>
+                  )}
                 </div>
-                <h4 className="font-bold text-xs text-white">{step.t}</h4>
-                <p className="text-[11px] text-slate-400">{step.d}</p>
+                <h4 className="font-bold text-xs text-white leading-snug">{step.t}</h4>
+                <p className="text-[11px] text-slate-400 leading-relaxed">{step.d}</p>
               </div>
             ))}
           </div>
