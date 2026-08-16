@@ -9,9 +9,7 @@ import {
   Sparkles,
   Type,
   ChevronDown,
-  Languages,
-  Sun,
-  Moon
+  Languages
 } from 'lucide-react';
 import { useLang } from '../i18n';
 import { AppTab } from '../types';
@@ -25,8 +23,6 @@ interface HeaderProps {
   pendingCount?: number;
   fontScale?: FontScale;
   onChangeFontScale?: (scale: FontScale) => void;
-  theme?: 'dark' | 'light';
-  onToggleTheme?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -36,8 +32,6 @@ export const Header: React.FC<HeaderProps> = ({
   pendingCount = 0,
   fontScale = 'standard',
   onChangeFontScale,
-  theme = 'dark',
-  onToggleTheme,
 }) => {
   const [isFontMenuOpen, setIsFontMenuOpen] = useState(false);
   const { lang, setLang } = useLang();
@@ -83,19 +77,6 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
           
           <div className="flex items-center gap-2 shrink-0 text-slate-300 text-xs">
-            {/* Theme Toggle */}
-            <button
-              onClick={onToggleTheme}
-              id="theme-toggle-btn"
-              title={theme === 'light' ? '切換為深色主題' : '切換為淺色主題'}
-              className="flex items-center gap-1.5 bg-slate-900 px-2 py-1 rounded-lg border border-slate-800 hover:border-[#D4AF37]/50 transition-colors cursor-pointer"
-            >
-              {theme === 'light'
-                ? <Moon className="w-3.5 h-3.5 text-[#D4AF37]" />
-                : <Sun className="w-3.5 h-3.5 text-[#D4AF37]" />}
-              <span className="font-bold text-[11px]">{theme === 'light' ? '深色' : '淺色'}</span>
-            </button>
-
             {/* Language Toggle */}
             <button
               onClick={toggleLang}

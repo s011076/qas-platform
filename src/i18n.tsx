@@ -7,7 +7,7 @@ export type Lang = 'zh-Hant' | 'zh-Hans';
 const t2s = OpenCC.Converter({ from: 'tw', to: 'cn' });
 const s2t = OpenCC.Converter({ from: 'cn', to: 'tw' });
 
-const STORAGE_KEY = 'hk_qas_lang';
+const STORAGE_KEY = 'hk_qas_lang_v2';
 
 function getInitialLang(): Lang {
   try {
@@ -56,9 +56,17 @@ export function convertDomText(root: HTMLElement | null, lang: Lang) {
     if (lang === 'zh-Hant') {
       // Restore exact original text from snapshot.
       const orig = originalCache.get(node);
-      if (orig !== undefined && node.nodeValue !== orig) {
-        node.nodeValue = orig;
-      } else if (orig === undefined) {
+      if (orig !== undefined) {
+        if (node.nodeValue !== orig) {
+          // If the current value is the simplified form of the snapshot, restore.
+          // Otherwise React must have updated the text underneath — refresh snapshot.
+          if (t2s(orig) === node.nodeValue) {
+            node.nodeValue = orig;
+          } else {
+            originalCache.set(node, raw);
+          }
+        }
+      } else {
         // Fresh node after React re-render — its current value IS the original.
         originalCache.set(node, raw);
       }
@@ -66,6 +74,10 @@ export function convertDomText(root: HTMLElement | null, lang: Lang) {
       // Simplified: always convert from the snapshot original (idempotent & exact).
       let orig = originalCache.get(node);
       if (orig === undefined) {
+        orig = raw;
+        originalCache.set(node, raw);
+      } else if (raw !== orig && t2s(orig) !== raw) {
+        // React changed the text underneath — refresh the snapshot from current value.
         orig = raw;
         originalCache.set(node, raw);
       }

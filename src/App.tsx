@@ -21,21 +21,6 @@ export default function App() {
   const [isWechatModalOpen, setIsWechatModalOpen] = useState(false);
   const [registerCourseType, setRegisterCourseType] = useState<CourseType>('full_bundle');
   const [fontScale, setFontScale] = useState<FontScale>('standard');
-  // Theme: 'dark' (深藍金) | 'light' (淺色第二套)
-  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    try {
-      return (localStorage.getItem('hk_qas_theme') as 'dark' | 'light') || 'dark';
-    } catch {
-      return 'dark';
-    }
-  });
-  const toggleTheme = () => {
-    setTheme((t) => {
-      const next = t === 'dark' ? 'light' : 'dark';
-      try { localStorage.setItem('hk_qas_theme', next); } catch { /* ignore */ }
-      return next;
-    });
-  };
   
   // Data state
   const [candidates, setCandidates] = useState<Candidate[]>([]);
@@ -92,7 +77,7 @@ export default function App() {
 
   return (
     <LangProvider>
-    <div ref={mainRef} className={`${theme === 'light' ? 'theme-light ' : ''}min-h-screen bg-[#0A1128] text-slate-200 flex flex-col font-sans selection:bg-[#D4AF37] selection:text-slate-950 pb-16 sm:pb-0`}>
+    <div ref={mainRef} className={`min-h-screen bg-[#0A1128] text-slate-200 flex flex-col font-sans selection:bg-[#D4AF37] selection:text-slate-950 pb-16 sm:pb-0`}>
       
       {/* High Density Top Telemetry & Status Bar */}
       <div className="bg-[#070d1f] text-slate-400 text-[11px] py-1.5 px-4 border-b border-slate-800 flex items-center justify-between">
@@ -134,8 +119,6 @@ export default function App() {
           pendingCount={pendingCount}
           fontScale={fontScale}
           onChangeFontScale={setFontScale}
-          theme={theme}
-          onToggleTheme={toggleTheme}
         />
 
         {/* View Router */}
